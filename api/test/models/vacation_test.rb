@@ -4,9 +4,19 @@ require 'test_helper'
 
 class VacationTest < ActiveSupport::TestCase
   def setup
-    @employee = employees(:employee_1)
-    @vacation = vacations(:vacation_1)
+    @employee = employees(:employee1)
+    @vacation = vacations(:vacation1)
   end
+
+  should belong_to(:employee)
+
+  should define_enum_for(:status)
+    .with_values(
+      Aprobado: 'Aprobado',
+      Pendiente: 'Pendiente',
+      Rechazado: 'Rechazado'
+    )
+    .backed_by_column_of_type(:enum)
 
   test 'should be valid' do
     assert @vacation.valid?

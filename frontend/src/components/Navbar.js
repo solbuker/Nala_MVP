@@ -17,7 +17,7 @@ const Navbar = ({ currUser, setCurrUser }) => {
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
           <Typography variant="h6" component="div">
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Vacation Portal
+              Portal de Vacaciones
             </Link>
           </Typography>
         </Box>

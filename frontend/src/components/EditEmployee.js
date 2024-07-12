@@ -56,7 +56,7 @@ const EditEmployee = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box
         component="form"
         onSubmit={handleSubmit}

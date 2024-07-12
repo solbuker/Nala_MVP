@@ -14,7 +14,7 @@ module Api
 
       def show
         @vacation = @employee.vacations.find(params[:id])
-        render json: @vacation
+        render json: @vacation.as_json(include: :employee)
       end
 
       def create

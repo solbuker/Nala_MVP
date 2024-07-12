@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  IconButton,
+  Typography,
+  Box
+} from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import AutocompleteEmployee from './AutocompleteEmployee';
 import AutocompleteLeader from './AutocompleteLeader';
-import { IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const EmployeesVacations = () => {
   const [employees, setEmployees] = useState([]);
@@ -35,7 +38,7 @@ const EmployeesVacations = () => {
   const fetchEmployees = useCallback(async (page = 1, rowsPerPage = 10, name, leader) => {
     try {
       const token = localStorage.getItem('token');
-      if (!token) throw new Error('No se encontro token');
+      if (!token) throw new Error('No se encontró token');
 
       const nameQuery = buildNameQueryString(name);
       const leaderQuery = buildLeaderQueryString(leader);
@@ -138,13 +141,15 @@ const EmployeesVacations = () => {
   };
 
   return (
-    <div>
-      <h1>Portal de Vacaciones</h1>
-      {error && <p>Error: {error}</p>}
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Portal de Vacaciones
+      </Typography>
+      {error && <Typography color="error">Error: {error}</Typography>}
       <AutocompleteEmployee setFilter={setNameFilter} />
       <AutocompleteLeader setFilter={setLeaderFilter} />
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="tabla de empleados">
           <TableHead>
             <TableRow>
               <TableCell>Empleado</TableCell>
@@ -156,18 +161,19 @@ const EmployeesVacations = () => {
           <TableBody>
             {employees.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4}>No se encontraron empleados.</TableCell>
+                <TableCell colSpan={4} align="center">No se encontraron empleados.</TableCell>
               </TableRow>
             ) : (
-              employees.map((employee, index) => (
-                <TableRow key={index}>
-                  <TableCell>{employee.name}
-                  <IconButton onClick={() => handleEditEmployee(employee.id)}>
-                  <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteEmployee(employee.id)}>
-                  <DeleteIcon />
-                  </IconButton>
+              employees.map((employee) => (
+                <TableRow key={employee.id}>
+                  <TableCell>
+                    {employee.name}
+                    <IconButton onClick={() => handleEditEmployee(employee.id)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => handleDeleteEmployee(employee.id)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                   <TableCell>{employee.leader}</TableCell>
                   <TableCell>
@@ -175,7 +181,7 @@ const EmployeesVacations = () => {
                       {employee.vacations && employee.vacations.length > 0 ? (
                         employee.vacations.map(vacation => (
                           <li key={vacation.id}>
-                            {vacation.start_date} - {vacation.end_date}
+                            <Link to={`employees/${employee.id}/vacations/${vacation.id}`}>{vacation.start_date} - {vacation.end_date}</Link>
                             <IconButton onClick={() => handleEditVacation(employee.id, vacation.id)}>
                               <EditIcon />
                             </IconButton>
@@ -192,7 +198,7 @@ const EmployeesVacations = () => {
                   <TableCell>
                     <ul>
                       {employee.total_vacation_days && Object.entries(employee.total_vacation_days).map(([year, days]) => (
-                        <li key={year}>{year}: {days} dias</li>
+                        <li key={year}>{year}: {days} días</li>
                       ))}
                     </ul>
                   </TableCell>
@@ -210,9 +216,9 @@ const EmployeesVacations = () => {
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
-        labelRowsPerPage="Por página"
+        labelRowsPerPage="Filas por página"
       />
-    </div>
+    </Box>
   );
 };
 

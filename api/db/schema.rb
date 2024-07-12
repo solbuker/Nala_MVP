@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_022453) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_144400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "status_type", ["Aprobado", "Rechazado", "Pendiente"]
 
   create_table "employees", force: :cascade do |t|
     t.string "name", null: false
@@ -48,9 +52,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_022453) do
     t.date "end_date", null: false
     t.string "vacation_type", null: false
     t.string "motive"
-    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "status", null: false, enum_type: "status_type"
     t.index ["employee_id"], name: "index_vacations_on_employee_id"
   end
 

@@ -38,7 +38,7 @@ const AddEmployee = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box
         component="form"
         ref={formRef}

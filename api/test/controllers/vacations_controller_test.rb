@@ -6,8 +6,8 @@ module Api
   module V1
     class VacationsControllerTest < ActionDispatch::IntegrationTest
       setup do
-        @employee = employees(:employee_1)
-        @vacation = vacations(:vacation_1)
+        @employee = employees(:employee1)
+        @vacation = vacations(:vacation1)
         @user = users(:one)
         sign_in @user
       end
@@ -25,7 +25,7 @@ module Api
       test 'should create vacation' do
         assert_difference('Vacation.count') do
           post api_v1_employee_vacations_url(@employee),
-               params: { vacation: { start_date: Time.zone.today, end_date: Time.zone.today + 7, status: 'aprobado', vacation_type: 'vacaciones' } }, as: :json
+               params: { vacation: { start_date: Time.zone.today, end_date: Time.zone.today + 7, status: 'Aprobado', vacation_type: 'vacaciones' } }, as: :json
         end
 
         assert_response :created

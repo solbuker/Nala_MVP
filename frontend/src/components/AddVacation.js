@@ -109,13 +109,20 @@ const AddVacation = () => {
           fullWidth
           margin="normal"
         />
-        <TextField
-          label="Estado"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="status-label">Estado</InputLabel>
+          <Select
+            labelId="status-label"
+            id="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            label="Estado"
+          >
+            <MenuItem value="Aprobado">Aprobado</MenuItem>
+            <MenuItem value="Rechazado">Rechazado</MenuItem>
+            <MenuItem value="Pendiente">Pendiente</MenuItem>
+          </Select>
+        </FormControl>
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Agregar vacaciones
         </Button>

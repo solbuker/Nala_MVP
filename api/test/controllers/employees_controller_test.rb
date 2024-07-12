@@ -6,7 +6,7 @@ module Api
   module V1
     class EmployeesControllerTest < ActionDispatch::IntegrationTest
       setup do
-        @employee = employees(:employee_1)
+        @employee = employees(:employee1)
         @user = users(:one)
         sign_in @user
       end
@@ -23,7 +23,7 @@ module Api
 
       test 'should create employee' do
         assert_difference('Employee.count') do
-          post api_v1_employees_url, params: { employee: { name: 'New Employee', email: 'new@nala.com', leader: 'juan' } },
+          post api_v1_employees_url, params: { employee: { name: 'New Employee', email: 'new@nalademo.com', leader: 'juan' } },
                                      as: :json
         end
 

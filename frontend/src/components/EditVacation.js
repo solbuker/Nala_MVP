@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { fetchWithAuth } from '../Utils';
 
 const EditVacation = () => {
@@ -104,13 +104,20 @@ const EditVacation = () => {
           fullWidth
           margin="normal"
         />
-        <TextField
-          label="Estado"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="status-label">Estado</InputLabel>
+          <Select
+            labelId="status-label"
+            id="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            label="Estado"
+          >
+            <MenuItem value="Aprobado">Aprobado</MenuItem>
+            <MenuItem value="Rechazado">Rechazado</MenuItem>
+            <MenuItem value="Pendiente">Pendiente</MenuItem>
+          </Select>
+        </FormControl>
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Actualizar vacaciones
         </Button>
