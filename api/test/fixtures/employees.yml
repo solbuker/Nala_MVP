@@ -1,0 +1,10 @@
+employee_1:
+  name: "Employee 1"
+  email: "employee_1@nala.com"
+  leader: "Juan"
+
+
+employee_2:
+  name: "Employee 2"
+  email: "employee_2@nala.com"
+  leader: "Carlos"
