@@ -25,7 +25,9 @@ module Api
       test 'should create vacation' do
         assert_difference('Vacation.count') do
           post api_v1_employee_vacations_url(@employee),
-               params: { vacation: { start_date: Time.zone.today, end_date: Time.zone.today + 7, status: 'Aprobado', vacation_type: 'vacaciones' } }, as: :json
+               params: { vacation: { start_date: Time.zone.today,
+                                     end_date: Time.zone.today + 7, status: 'Aprobado',
+                                     vacation_type: 'vacaciones' } }, as: :json
         end
 
         assert_response :created
@@ -33,7 +35,8 @@ module Api
 
       test 'should update vacation' do
         patch api_v1_employee_vacation_url(@employee, @vacation),
-              params: { vacation: { start_date: Time.zone.today, end_date: Time.zone.today + 8 } }, as: :json
+              params: { vacation: { start_date: Time.zone.today,
+                                    end_date: Time.zone.today + 8 } }, as: :json
         assert_response :success
       end
 

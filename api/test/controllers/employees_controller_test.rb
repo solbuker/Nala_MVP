@@ -23,7 +23,8 @@ module Api
 
       test 'should create employee' do
         assert_difference('Employee.count') do
-          post api_v1_employees_url, params: { employee: { name: 'New Employee', email: 'new@nalademo.com', leader: 'juan' } },
+          post api_v1_employees_url, params: { employee: { name:
+            'New Employee', email: 'new@nalademo.com', leader: 'juan' } },
                                      as: :json
         end
 
@@ -31,7 +32,8 @@ module Api
       end
 
       test 'should update employee' do
-        patch api_v1_employee_url(@employee), params: { employee: { name: 'Updated Name' } }, as: :json
+        patch api_v1_employee_url(@employee), params: { employee:
+          { name: 'Updated Name' } }, as: :json
         assert_response :success
       end
 

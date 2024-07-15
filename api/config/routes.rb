@@ -13,7 +13,6 @@ Rails.application.routes.draw do
                sessions: 'users/sessions',
                registrations: 'users/registrations'
              }
-  root 'home#index'
 
   namespace :api do
     namespace :v1 do
