@@ -4,14 +4,14 @@ import { Container, Typography, Box, Paper, Divider } from '@mui/material';
 import { fetchWithAuth } from '../Utils';
 
 const VacationShow = () => {
-  const { employeeId, vacationId } = useParams();
+  const { userId, vacationId } = useParams();
   const [vacation, setVacation] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchVacation = async () => {
       try {
-        const response = await fetchWithAuth(`http://localhost:3000/api/v1/employees/${employeeId}/vacations/${vacationId}`, {
+        const response = await fetchWithAuth(`http://localhost:3000/api/v1/users/${userId}/vacations/${vacationId}`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -20,7 +20,6 @@ const VacationShow = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log(data);
         setVacation(data);
       } catch (error) {
         setError(error.message);
@@ -28,7 +27,7 @@ const VacationShow = () => {
     };
 
     fetchVacation();
-  }, [employeeId, vacationId]);
+  }, [userId, vacationId]);
 
   if (error) {
     return <Typography color="error">Error: {error}</Typography>;

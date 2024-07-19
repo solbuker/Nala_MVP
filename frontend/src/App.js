@@ -2,23 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import User from './components/User';
-import EmployeesVacations from './components/EmployeesVacations';
-import AddVacation from './components/AddVacation';
+import Dashboard from './components/Dashboard';
 import EditVacation from './components/EditVacation';
-import EditEmployee from './components/EditEmployee';
-import AddEmployee from './components/AddEmployee';
 import VacationShow from './components/VacationShow';
+import MyVacations from './components/MyVacations';
 import './App.css';
+import EmployeeVacations from './components/EmployeeVacations';
+import RequestVacation from './components/RequestVacation';
+import ManageRequests from './components/ManageRequests';
 
 const App = () => {
   const [currUser, setCurrUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setCurrUser({ token });
-    }
-  }, []);
 
   return (
     <div className="App">
@@ -27,13 +21,15 @@ const App = () => {
           <>
             <Navbar currUser={currUser} setCurrUser={setCurrUser} />
             <Routes>
-              <Route path="/" element={<EmployeesVacations />} />
-              <Route path="/add-vacation" element={<AddVacation />} />
-              <Route path="/edit-vacation/:employeeId/:vacationId" element={<EditVacation />} />
-              <Route path="/edit-employee/:employeeId" element={<EditEmployee/>} />
-              <Route path="/add-employee" element={<AddEmployee />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/request-vacation" element={<RequestVacation />} />
+              <Route path="/edit-vacation/:userId/:vacationId" element={<EditVacation />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/employees-vacations" element={<EmployeeVacations />} />
+              <Route path="/manage-requests" element={<ManageRequests />} />
+              <Route path="/my-vacations" element={<MyVacations />} />
               <Route path="*" element={<Navigate to="/" />} />
-              <Route path="/employees/:employeeId/vacations/:vacationId" element={<VacationShow />} />
+              <Route path="/users/:userId/vacations/:vacationId" element={<VacationShow />} />
             </Routes>
           </>
         ) : (

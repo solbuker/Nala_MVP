@@ -4,11 +4,11 @@ require 'test_helper'
 
 class VacationTest < ActiveSupport::TestCase
   def setup
-    @employee = employees(:employee1)
+    @user = users(:user1)
     @vacation = vacations(:vacation1)
   end
 
-  should belong_to(:employee)
+  should belong_to(:user)
 
   should define_enum_for(:status)
     .with_values(
@@ -22,8 +22,8 @@ class VacationTest < ActiveSupport::TestCase
     assert @vacation.valid?
   end
 
-  test 'employee id should be present' do
-    @vacation.employee_id = nil
+  test 'user id should be present' do
+    @vacation.user_id = nil
     assert_not @vacation.valid?
   end
 

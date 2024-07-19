@@ -14,6 +14,7 @@ const Logout = ({ setCurrUser }) => {
       const data = await response.json();
       if (!response.ok) throw data.error;
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       setCurrUser(null);
     } catch (error) {
       console.log("error", error);

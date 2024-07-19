@@ -1,12 +1,12 @@
 vacation1:
-  employee: employee1
+  user: user1
   start_date: <%= Date.today %>
   end_date: <%= Date.today + 7 %>
   vacation_type: "vacaciones"
   status: "Rechazado"
 
 vacation2:
-  employee: employee2
+  user: user2
   start_date: <%= Date.today %>
   end_date: <%= Date.today + 14 %>
   vacation_type: "incapacidad"

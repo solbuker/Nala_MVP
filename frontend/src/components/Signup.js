@@ -1,27 +1,43 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { TextField, Button, Container, Typography, Link, Box } from '@mui/material';
 
 const Signup = ({ setCurrUser, setShow }) => {
   const formRef = useRef();
+  const [error, setError] = useState(null);
+
+  const mapBackendErrors = (errors) => {
+    if (!errors || errors.length === 0) return 'An error occurred';
+
+    const filteredErrors = errors.filter(error =>
+      !error.includes("Name can't be blank")
+    );
+
+    const maxErrorsToShow = 2;
+    return filteredErrors.slice(0, maxErrorsToShow).join(', ');
+  };
 
   const signup = async (userInfo, setCurrUser) => {
     const url = "http://localhost:3000/signup";
     try {
       const response = await fetch(url, {
-        method: 'post',
+        method: 'POST',
         headers: {
-          "content-type": 'application/json',
-          "accept": "application/json"
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(userInfo)
       });
       const data = await response.json();
-      if (!response.ok) throw data.error;
+      if (!response.ok) {
+        throw new Error(mapBackendErrors(data.errors));
+      }
 
       localStorage.setItem('token', response.headers.get("Authorization"));
+      localStorage.setItem("userId", data.id);
       setCurrUser(data);
+      setError(null);
     } catch (error) {
-      console.log("error", error);
+      setError(error.message);
     }
   };
 
@@ -30,7 +46,10 @@ const Signup = ({ setCurrUser, setShow }) => {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData);
     const userInfo = {
-      "user": { email: data.email, password: data.password }
+      "user": {
+        email: data.email,
+        password: data.password
+      }
     };
     signup(userInfo, setCurrUser);
     e.target.reset();
@@ -52,6 +71,7 @@ const Signup = ({ setCurrUser, setShow }) => {
         <Typography variant="h4" component="h1" gutterBottom>
           Signup
         </Typography>
+        {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>} {/* Display error messages */}
         <TextField
           label="Email"
           type="email"

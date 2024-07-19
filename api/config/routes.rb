@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# api/config/routes
 Rails.application.routes.draw do
   devise_for :users,
              path: '',
@@ -16,9 +15,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :employees do
+      resources :users do
         resources :vacations
       end
+      get 'users/dashboard/me', to: 'users#find_current_user'
     end
   end
 end

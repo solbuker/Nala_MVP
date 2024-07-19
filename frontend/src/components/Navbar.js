@@ -7,9 +7,12 @@ const Navbar = ({ currUser, setCurrUser }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     setCurrUser(null);
     navigate('/login');
   };
+
+  console.log('Current User:', currUser);
 
   return (
     <AppBar position="static">
@@ -23,8 +26,14 @@ const Navbar = ({ currUser, setCurrUser }) => {
         </Box>
         {currUser ? (
           <>
-            <Button color="inherit" component={Link} to="/add-vacation">Añadir Vacaciones</Button>
-            <Button color="inherit" component={Link} to="/add-employee">Añadir Empleado</Button>
+            {currUser.is_leader && (
+              <Button color="inherit" component={Link} to="/manage-requests" state={{ currentUser: currUser }}>
+                Administrar solicitudes
+              </Button>
+            )}
+            <Button color="inherit" component={Link} to="/request-vacation" state={{ currentUser: currUser }}>
+              Solicitar vacaciones
+            </Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>
         ) : (

@@ -1,28 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { TextField, Button, Container, Typography, Link, Box } from '@mui/material';
 
 const Login = ({ setCurrUser, setShow }) => {
   const formRef = useRef();
+  const [error, setError] = useState(null); // State to store error messages
 
   const login = async (userInfo, setCurrUser) => {
     const url = "http://localhost:3000/login";
     try {
       const response = await fetch(url, {
-        method: "post",
+        method: "POST",
         headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(userInfo)
       });
       const data = await response.json();
-      if (!response.ok) throw data.error;
+      if (!response.ok) {
+        throw new Error(data.error || 'Error');
+      }
 
-      console.log(response.headers.get("Authorization"));
       localStorage.setItem("token", response.headers.get("Authorization"));
+      localStorage.setItem("userId", data.id);
       setCurrUser(data);
+      setError(null);
     } catch (error) {
-      console.log("error", error);
+      setError(error.message);
     }
   };
 
@@ -32,7 +36,8 @@ const Login = ({ setCurrUser, setShow }) => {
     const data = Object.fromEntries(formData);
     const userInfo = {
       "user": {
-        email: data.email, password: data.password
+        email: data.email,
+        password: data.password
       }
     };
     login(userInfo, setCurrUser);
@@ -55,6 +60,7 @@ const Login = ({ setCurrUser, setShow }) => {
         <Typography variant="h4" component="h1" gutterBottom>
           Login
         </Typography>
+        {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>} {}
         <TextField
           label="Email"
           type="email"

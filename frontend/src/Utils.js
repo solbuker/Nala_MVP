@@ -8,7 +8,8 @@ export const fetchWithAuth = async (url, options = {}) => {
 
   if (response.status === 401) {
     localStorage.removeItem('token');
-    window.location.href = '/login'; 
+    localStorage.removeItem('userId');
+    window.location.href = '/login';
     throw new Error('Unauthorized');
   }
 
@@ -16,7 +17,7 @@ export const fetchWithAuth = async (url, options = {}) => {
 };
 
 export const fetchEmployeesList = async () => {
-  const response = await fetchWithAuth('http://localhost:3000/api/v1/employees', {
+  const response = await fetchWithAuth('http://localhost:3000/api/v1/users', {
     headers: {
       'Content-Type': 'application/json',
     },

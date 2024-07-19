@@ -13,6 +13,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
 
       ## Rememberable
       t.datetime :remember_created_at
+      t.string :name, null: false, index: true
+      t.boolean :is_leader, default: false
+      t.references :leader, foreign_key: { to_table: :users }, index: true
 
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
